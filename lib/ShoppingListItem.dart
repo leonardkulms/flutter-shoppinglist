@@ -6,6 +6,7 @@ class Product {
 }
 
 typedef void CartChangedCallback(Product product, bool inCart);
+typedef void RemoveCallback(String name);
 
 class ShoppingListItem extends StatelessWidget {
   ShoppingListItem({this.product, this.inCart, this.onCartChanged})
@@ -14,6 +15,7 @@ class ShoppingListItem extends StatelessWidget {
   final Product product;
   final bool inCart;
   final CartChangedCallback onCartChanged;
+  final RemoveCallback removeProduct;
 
   Color _getColor(BuildContext context) {
     return inCart ? Colors.black54 : Theme.of(context).primaryColor;
@@ -38,6 +40,14 @@ class ShoppingListItem extends StatelessWidget {
           backgroundColor: _getColor(context),
           child: Text(product.name[0]),
         ),
-        title: Text(product.name, style: getTextStyle(context)));
+        trailing: CircleAvatar(
+            backgroundColor: Colors.redAccent,
+            child: IconButton(
+              onPressed: () {
+                widget.removeProduct(widget.product.name);
+              },
+              icon: Icon(Icons.delete),
+              color: Colors.white,
+            )),
   }
 }

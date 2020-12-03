@@ -17,6 +17,12 @@ class _ShoppingListState extends State<ShoppingList> {
     });
   }
 
+  void _removeProduct(String name) {
+    setState(() {
+      products.removeWhere((item) => item.name == name);
+    });
+  }
+
   _displayDialog() {
     Widget widget = NewShoppingListItem(action: _addProduct);
     displayDialog(context, widget);
@@ -52,6 +58,7 @@ class _ShoppingListState extends State<ShoppingList> {
             product: product,
             inCart: _shoppingCart.contains(product),
             onCartChanged: _handleCartChanged,
+            removeProduct: _removeProduct,
           );
         }).toList(),
       ),
