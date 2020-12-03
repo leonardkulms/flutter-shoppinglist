@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shoppinglist/GenericDialog.dart';
+import 'package:shoppinglist/GenericComponents/GenericDialog.dart';
 import 'EditShoppingListItem.dart';
 
 class Product {

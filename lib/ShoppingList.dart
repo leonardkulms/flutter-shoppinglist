@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'ShoppingListItem.dart';
 import 'NewShoppingListItem.dart';
-import 'GenericDialog.dart';
+import 'GenericComponents/GenericDialog.dart';
 
 class ShoppingList extends StatefulWidget {
   ShoppingList({Key key}) : super(key: key);
