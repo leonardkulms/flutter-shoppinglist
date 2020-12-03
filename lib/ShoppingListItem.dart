@@ -35,7 +35,10 @@ class _ShoppingListItemState extends State<ShoppingListItem> {
   }
 
   _displayDialog(context) {
-    Widget widg = EditShoppingListItem(action: _updateProduct);
+    Widget widg = EditShoppingListItem(
+      action: _updateProduct,
+      oldName: widget.product.name,
+    );
     displayDialog(context, widg);
   }
 
