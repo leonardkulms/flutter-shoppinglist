@@ -1,15 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shoppinglist/GenericComponents/GenericDialog.dart';
 import 'EditShoppingListItem.dart';
-
-class Product {
-  Product({this.name});
-  String name;
-
-  void update(String newName) {
-    this.name = newName;
-  }
-}
+import '../models/Product.dart';
 
 typedef void CartChangedCallback(Product product, bool inCart);
 typedef void RemoveCallback(String name);

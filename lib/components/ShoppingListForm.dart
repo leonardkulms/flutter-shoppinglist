@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'GenericComponents/GenericTextField.dart';
-import 'GenericComponents/GenericButtons.dart';
+import '../GenericComponents/GenericTextField.dart';
+import '../GenericComponents/GenericButtons.dart';
 
 typedef InputCallback = void Function(String text);
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'ShoppingList.dart';
+import 'components/ShoppingList.dart';
 
 void main() {
   runApp(MaterialApp(
