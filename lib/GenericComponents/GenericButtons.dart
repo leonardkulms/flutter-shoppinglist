@@ -6,10 +6,12 @@ class GenericButtons extends StatelessWidget {
   GenericButtons({
     this.action,
     this.controller,
+    this.formKey,
   });
 
   final TextEditingController controller;
   final InputCallback action;
+  final GlobalKey<FormState> formKey;
 
   @override
   Widget build(BuildContext context) {
@@ -44,8 +46,10 @@ class GenericButtons extends StatelessWidget {
               ),
             ),
             onPressed: () {
-              action(controller.text);
-              return Navigator.of(context).pop(true);
+              if (formKey.currentState.validate()) {
+                action(controller.text);
+                return Navigator.of(context).pop(true);
+              }
             },
           )
         ],

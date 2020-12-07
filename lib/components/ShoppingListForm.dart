@@ -16,13 +16,20 @@ class ShoppingListForm extends StatelessWidget {
   final TextEditingController controller;
   final String labelText;
   final InputCallback action;
+  final _formKey = GlobalKey<FormState>();
 
   Widget userInput() => GenericTextField(
         controller: controller,
         labelText: labelText,
+        action: action,
+        formKey: _formKey,
       );
 
-  Widget buttons() => GenericButtons(action: action, controller: controller);
+  Widget buttons() => GenericButtons(
+        action: action,
+        controller: controller,
+        formKey: _formKey,
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -34,22 +41,25 @@ class ShoppingListForm extends StatelessWidget {
         shape: BoxShape.rectangle,
         borderRadius: BorderRadius.all(Radius.circular(12)),
       ),
-      child: Column(
-        children: <Widget>[
-          Expanded(
-            child: Text(
-              title.toUpperCase(),
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-                fontSize: 17,
+      child: Form(
+        key: _formKey,
+        child: Column(
+          children: <Widget>[
+            Expanded(
+              child: Text(
+                title.toUpperCase(),
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 17,
+                ),
               ),
             ),
-          ),
-          userInput(),
-          buttons(),
-        ],
+            userInput(),
+            buttons(),
+          ],
+        ),
       ),
     );
   }
