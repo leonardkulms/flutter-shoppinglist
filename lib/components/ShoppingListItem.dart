@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:shoppinglist/GenericComponents/GenericDialog.dart';
 import 'EditShoppingListItem.dart';
-import '../models/Product.dart';
+import 'package:shoppinglist/models/Product.dart';
+import '../contexts/products.dart';
 
 typedef void CartChangedCallback(Product product, bool inCart);
-typedef void RemoveCallback(String name);
+typedef void RemoveCallback(int id);
 
 class ShoppingListItem extends StatefulWidget {
   ShoppingListItem(
@@ -23,6 +24,7 @@ class _ShoppingListItemState extends State<ShoppingListItem> {
   void _updateProduct(newName) {
     setState(() {
       widget.product.update(newName);
+      updateProduct(widget.product);
     });
   }
 
@@ -64,7 +66,7 @@ class _ShoppingListItemState extends State<ShoppingListItem> {
             backgroundColor: Colors.redAccent,
             child: IconButton(
               onPressed: () {
-                widget.removeProduct(widget.product.name);
+                widget.removeProduct(widget.product.id);
               },
               icon: Icon(Icons.delete),
               color: Colors.white,

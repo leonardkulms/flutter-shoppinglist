@@ -3,6 +3,7 @@ import 'ShoppingListItem.dart';
 import 'NewShoppingListItem.dart';
 import '../GenericComponents/GenericDialog.dart';
 import '../models/Product.dart';
+import 'package:shoppinglist/contexts/products.dart';
 
 class ShoppingList extends StatefulWidget {
   ShoppingList({Key key}) : super(key: key);
@@ -12,15 +13,27 @@ class ShoppingList extends StatefulWidget {
 }
 
 class _ShoppingListState extends State<ShoppingList> {
+  @override
+  void initState() {
+    super.initState();
+    produs = _initProducts();
+  }
+
+  Future<List<Product>> produs;
+
+  Future<List<Product>> _initProducts() async {
+    return await products();
+  }
+
   void _addProduct(String userInput) {
     setState(() {
-      products.add(Product(name: userInput));
+      insertProduct(Product(name: userInput));
     });
   }
 
-  void _removeProduct(String name) {
+  void _removeProduct(int id) {
     setState(() {
-      products.removeWhere((item) => item.name == name);
+      deleteProduct(id);
     });
   }
 
@@ -28,12 +41,6 @@ class _ShoppingListState extends State<ShoppingList> {
     Widget widget = NewShoppingListItem(action: _addProduct);
     displayDialog(context, widget);
   }
-
-  List<Product> products = <Product>[
-    Product(name: 'Eggs'),
-    Product(name: 'Toast'),
-    Product(name: 'dark chocolate'),
-  ];
 
   Set<Product> _shoppingCart = Set<Product>();
 
@@ -52,16 +59,29 @@ class _ShoppingListState extends State<ShoppingList> {
       appBar: AppBar(
         title: Text('Shopping List'),
       ),
-      body: ListView(
-        padding: EdgeInsets.symmetric(vertical: 8.0),
-        children: products.map((Product product) {
-          return ShoppingListItem(
-            product: product,
-            inCart: _shoppingCart.contains(product),
-            onCartChanged: _handleCartChanged,
-            removeProduct: _removeProduct,
-          );
-        }).toList(),
+      body: FutureBuilder(
+        future: produs,
+        builder: (context, AsyncSnapshot snapshot) {
+          if (!snapshot.hasData) {
+            return Center(child: CircularProgressIndicator());
+          } else {
+            return Container(
+              child: ListView.builder(
+                padding: EdgeInsets.symmetric(vertical: 8.0),
+                itemCount: snapshot.data.length,
+                scrollDirection: Axis.vertical,
+                itemBuilder: (BuildContext context, int index) {
+                  return ShoppingListItem(
+                    product: snapshot.data[index],
+                    inCart: _shoppingCart.contains(snapshot.data[index]),
+                    onCartChanged: _handleCartChanged,
+                    removeProduct: _removeProduct,
+                  );
+                },
+              ),
+            );
+          }
+        },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _displayDialog(),
